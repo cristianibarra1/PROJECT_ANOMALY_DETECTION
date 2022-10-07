@@ -1,0 +1,57 @@
+,Department,Equipment Class,Equipment Count
+0,Board ofElections,Van,1.0
+1,Board ofElections,Off Road VehicleEquipment,2.0
+2,CircuitCourt,SUV,1.0
+3,Community EngagementCluster,Pick Up  Trucks,8.0
+4,Community EngagementCluster,Off Road VehicleEquipment,7.0
+5,Community EngagementCluster,SUV,2.0
+7,Community Use of PublicFacilities,Sedan,1.0
+8,Community Use of PublicFacilities,Sedan,1.0
+9,ConsumerProtection,Sedan,1.0
+10,Correction andRehabilitation,Off Road VehicleEquipment,3.0
+11,Correction andRehabilltation,Public  Safety Sedan,1.0
+12,Correction andRehabilitation,Public  Safety SUV,2.0
+13,Correction andRehabilitation,SUV,3.0
+14,Correction andRehabilitation,Pick Up Trucks,1.0
+15,Correction andRehabilitation,Van,8.0
+16,Correction andRehabilitation,Sedan,10.0
+17,Correction andRehabilitation,CUV,1.0
+18,County ExecutivesOffice,Sedan,2.0
+19,County ExecutivesOffice,Public Safety SUV,3.0
+20,EconomicDevelopment,SUV,1.0
+22,EnviromnentalProtection,SUV,18.0
+23,EnviromnentalProtection,Sedan,15.0
+24,EnviromnentalProtection,Van,3.0
+25,EnviromnentalProtection,CUV,1.0
+26,EnviromnentalProtection,CUV,1.0
+27,EnviromnentalProtection,Medium Duty,2.0
+28,EnviromnentalProtection,Pick Up Trucks,33.0
+30,Fire andRescue,Public Safety SUV,27.0
+31,Fire andRescue,Public Safety Pick Up Trucks,12.0
+32,Fire andRescue,Public Safety Pick Up Trucks,12.0
+33,Fire andRescue,Public Safety Sedan,18.0
+34,Fire andRescue,Public Safety Van,11.0
+36,Fire andRescue,SUV,6.0
+37,Fire andRescue,Van,4.0
+38,Fire andRescue,Off Road VehicleEquipment,2.0
+39,Fire andRecsue,Pick Up Trucks,12.0
+40,Fire andRescue,Sedan,1.0
+41,Fire andRescue,Public Safety CUV,4.0
+42,Fire andRescue,Public Safety Heavy Duty,1.0
+43,Fire andRescue,Heavy Duty,1.0
+44,Fire andRescue,Transit Bus,1.0
+45,Fire andRescue,Public Safety CUV,4.0
+48,GeneralServices,Public Safety Van,1.0
+49,GeneralServices,SUV,21.0
+50,GeneralServices,Public Safety Heavy Duty,1.0
+51,GeneralServices,Off Road VehicleEquipment,45.0
+52,GeneralServices,Sedan,31.0
+53,GeneralServices,Medium Duty,3.0
+54,GeneralServices,Van,42.0
+55,GeneralServices,CUV,5.0
+56,GeneralServcies,Heavy Duty,5.0
+57,GeneralServices,Pick Up Trucks,48.0
+58,Health and HumanServices,CUV,5.0
+59,Health and HumanServcies,Van,15.0
+60,Health and HumanServices,Public Safety SUV,1.0
+61,Health and HumanServices,Sedan,75.0
