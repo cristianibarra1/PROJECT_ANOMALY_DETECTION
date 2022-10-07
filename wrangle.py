@@ -9,9 +9,6 @@ import numpy as np
 import pandas as pd
 import env
 
-# Text display
-import colorama
-from colorama import Fore
 #acquire---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Acquire 
@@ -198,6 +195,27 @@ def question2_1(df):
     a = a.reset_index() # Prepare for plotting
     plt.figure(figsize=(15,10))
     sns.catplot(kind= 'bar', data=a.sort_values(by='vcount'), x='module', y='vcount', hue='cohort_name', height=7, aspect=2)
+    
+def Question2_3(df):
+        # Filter the dataset down to only current students
+    current_student = (df.index > df.start_date) & (df.index < df.end_date)
+    current = df[current_student]
+
+    # Filter further to only include java modules since they were the easiest to pick out
+    current.dropna(subset='module')
+    mods = current.module.unique().tolist()
+    mods.remove(None)
+    mods = [col for col in mods if 'java-' in col]
+    current = current[current.module.isin(mods)]
+
+    # Another filter to reduce noise
+    current= current[current.program !='Data Science']
+    current = current[current.module != 'java-1']
+    # Show popularity of java modules per cohort
+    a = current.groupby('cohort_name').module.value_counts().rename('vcount')
+    a = a.reset_index() # Prepare for plotting
+    sns.catplot(kind= 'bar', data=a[a.module=='java-ii'].sort_values(by='vcount'), y='cohort_name', x='vcount', height=4, aspect=1.5).set(title='Java-ii')
+
 
 def question2():
     '''
@@ -256,101 +274,41 @@ def question4(df):
     plt.title('IP Address Amount per User Distribution')
     sns.distplot(x=ip['ip'], **kwargs, color = '#004987')
 
-def one_user_df_prep(df, user):
-    '''
-    This function returns a dataframe consisting of data for only a single defined user
-    '''
-    df = df[df.user_id == user]
-    pages_per_user = df['path'].resample('d').count()
-    return pages_per_user
-
-def compute_pct_b(pages_per_user, span, weight, user):
-    '''
-    This function adds the %b of a bollinger band range for the page views of a single user's log activity
-    '''
-    # Calculate upper and lower bollinger band
-    midband = pages_per_user.ewm(span=span).mean()
-    stdev = pages_per_user.ewm(span=span).std()
-    ub = midband + stdev*weight
-    lb = midband - stdev*weight
-    
-    # Add upper and lower band values to dataframe
-    bb = pd.concat([ub, lb], axis=1)
-    
-    # Combine all data into a single dataframe
-    my_df = pd.concat([pages_per_user, midband, bb], axis=1)
-    my_df.columns = ['pages_per_user', 'midband', 'ub', 'lb']
-    
-    # Calculate percent b and relevant user id to dataframe
-    my_df['pct_b'] = (my_df['pages_per_user'] - my_df['lb'])/(my_df['ub'] - my_df['lb'])
-    my_df['user_id'] = user
-    return my_df
-
-def plot_bands(my_df, user):
-    '''
-    This function plots the bolliger bands of the page views for a single user
-    '''
-    fig, ax = plt.subplots(figsize=(12,8))
-    ax.plot(my_df.index, my_df.pages_per_user, label='Number of Pages, User: '+str(user))
-    ax.plot(my_df.index, my_df.midband, label = 'EMA/midband')
-    ax.plot(my_df.index, my_df.ub, label = 'Upper Band')
-    ax.plot(my_df.index, my_df.lb, label = 'Lower Band')
-    ax.legend(loc='best')
-    ax.set_ylabel('Number of Pages')
-    plt.show()
-
-def find_anomalies(df, user, span, weight, plot=False):
-    '''
-    This function returns the records where a user's daily activity exceeded the upper limit of a bollinger band range
-    '''
-    
-    # Reduce dataframe to represent a single user
-    pages_per_user = one_user_df_prep(df, user)
-    
-    # Add bollinger band data to dataframe
-    my_df = compute_pct_b(pages_per_user, span, weight, user)
-    
-    # Plot data if requested (plot=True)
-    if plot:
-        plot_bands(my_df, user)
-    
-    # Return only records that sit outside of bollinger band upper limit
-    return my_df[my_df.pct_b>1]
-
 def Question4_abnormal_users(df):
     '''
-    This function plot the top 6 users with abnormal amount of page visit and abnormal activity patterns
+    This function plot the top 6 users with abnormal 
     '''
+    # Top 6 abnormal users
     plt.figure(figsize = (20,20))
     plt.subplot(321)
-    df_341 = one_user_df_prep(df, 341)
-    df_341.plot(color = '#003F5D')
-    plt.title('User 341 Activity Over Time', fontsize = 20)
+    pages_228 = df[df.user_id == 228]['path'].resample('d').count()
+    pages_228.plot()
+    plt.title('User 228 Activity', fontsize = 20)
 
     plt.subplot(322)
-    df_138 = one_user_df_prep(df,138)
-    df_138.plot(color = '#00527C')
-    plt.title('User 341 Activity Over Time', fontsize = 20)
+    pages_843 = df[df.user_id == 843]['path'].resample('d').count()
+    pages_843.plot()
+    plt.title('User 843 Activity', fontsize = 20)
 
     plt.subplot(323)
-    df_526 = one_user_df_prep(df,526)
-    df_526.plot(color = '#00609C')
-    plt.title('User 526 Activity Over Time', fontsize = 20)
+    pages_690 = df[df.user_id == 690]['path'].resample('d').count()
+    pages_690.plot()
+    plt.title('User 690 Activity', fontsize = 20)
 
     plt.subplot(324)
-    df_658 = one_user_df_prep(df,658)
-    df_658.plot(color = '#006DB2')
-    plt.title('User 658 Activity Over Time', fontsize = 20)
+    pages_533 = df[df.user_id == 533]['path'].resample('d').count()
+    pages_533.plot()
+    plt.title('User 533 Activity', fontsize = 20)
 
     plt.subplot(325)
-    df_521 = one_user_df_prep(df,521)
-    df_521.plot(color = '#4E97D1')
-    plt.title('User 521 Activity Over Time', fontsize = 20)
+    pages_226 = df[df.user_id == 226]['path'].resample('d').count()
+    pages_226.plot()
+    plt.title('User 226 Activity', fontsize = 20)
 
     plt.subplot(326)
-    df_223 = one_user_df_prep(df,521)
-    df_223.plot(color = '#7BB4E3')
-    plt.title('User 223 Activity Over Time', fontsize = 20)
+    pages_460 = df[df.user_id == 460]['path'].resample('d').count()
+    pages_460.plot()
+    plt.title('User 460 Activity', fontsize = 20)
     plt.tight_layout()
 
     
@@ -403,7 +361,7 @@ def Question6(df):
     
 def Question6_2(df):
     '''
-    This function visualize the most frequently visited topics for full stack java program
+    This function visualize the most frequently visited topics for full stack java 
     '''
     p1 = pd.DataFrame(df[(df.date>df.end_date)&(df.program_id == 1)].path.value_counts().head(10))
     # Visualizing full stack java most frequent lesson
@@ -433,7 +391,7 @@ def Question6_4(df):
     
 def Question7(df):
     '''
-    This function visualize the topics that got accessed the least for web dep students
+    This function visualize the topics that got accessed the least for web dep 
     '''
     wb_plot = pd.DataFrame([['JavaScript Working with Variables', 1], ['Java-i', 1], ['HTML', 1], ['HTML-CSS Introduction', 1], ['Environment Setup', 1], ['Coding Challenges', 1]], columns = ['Lesson', 'Count'])
 
