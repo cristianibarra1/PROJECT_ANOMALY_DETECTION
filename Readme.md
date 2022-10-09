@@ -1,4 +1,4 @@
-![time_series_anomaly_detection_cover.png](attachment:time_series_anomaly_detection_cover.png)# 
+![time_series_anomaly_detection_cover.png](attachment:time_series_anomaly_detection_cover.png) 
 
 # Data Dictionary:
 **Variable** |    **Value**    | **Meaning**
